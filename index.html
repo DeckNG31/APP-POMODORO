@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe</title>
+    <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Tic Tac Toe</h1>
-        <div class="game-container">
-            <div id="board" class="board">
-                <div class="cell" onclick="cellClicked(0)"></div>
-                <div class="cell" onclick="cellClicked(1)"></div>
-                <div class="cell" onclick="cellClicked(2)"></div>
-                <div class="cell" onclick="cellClicked(3)"></div>
-                <div class="cell" onclick="cellClicked(4)"></div>
-                <div class="cell" onclick="cellClicked(5)"></div>
-                <div class="cell" onclick="cellClicked(6)"></div>
-                <div class="cell" onclick="cellClicked(7)"></div>
-                <div class="cell" onclick="cellClicked(8)"></div>
-            </div>
-            <button onclick="resetBoard()">Reset</button>
+        <h1>Pomodoro Timer</h1>
+        <div>
+            <label for="focusDuration">Focus Time (minutes):</label>
+            <input type="number" id="focusDuration" value="25" min="1">
         </div>
-        <p id="message"></p>
+        <div>
+            <label for="shortBreakDuration">Short Break Time (minutes):</label>
+            <input type="number" id="shortBreakDuration" value="5" min="1">
+        </div>
+        <div>
+            <label for="longBreakDuration">Long Break Time (minutes):</label>
+            <input type="number" id="longBreakDuration" value="15" min="1">
+        </div>
+        <div id="timer"></div>
+        <div id="controls">
+            <button id="startButton">Start</button>
+            <button id="pauseButton" disabled>Pause</button>
+            <button id="resetButton" disabled>Reset</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

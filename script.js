@@ -1,49 +1,93 @@
-let currentPlayer = "X";
-let board = ['', '', '', '', '', '', '', '', ''];
-let gameOver = false;
+let workDurationInput = document.getElementById("focusDuration");
+let shortBreakDurationInput = document.getElementById("shortBreakDuration");
+let longBreakDurationInput = document.getElementById("longBreakDuration");
 
-const winPatterns = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-];
+let workDuration = parseInt(workDurationInput.value) * 60;
+let shortBreakDuration = parseInt(shortBreakDurationInput.value) * 60;
+let longBreakDuration = parseInt(longBreakDurationInput.value) * 60;
 
-const cells = document.querySelectorAll('.cell');
-const message = document.getElementById('message');
+workDurationInput.addEventListener("change", function() {
+    workDuration = parseInt(workDurationInput.value) * 60;
+    if (currentDuration === workDuration) {
+        updateTimerDisplay();
+    }
+});
 
-function checkWinner() {
-    for (let pattern of winPatterns) {
-        const [a, b, c] = pattern;
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-            message.innerText = `${currentPlayer} wins!`;
-            gameOver = true;
-            return;
+shortBreakDurationInput.addEventListener("change", function() {
+    shortBreakDuration = parseInt(shortBreakDurationInput.value) * 60;
+    if (currentDuration === shortBreakDuration) {
+        updateTimerDisplay();
+    }
+});
+
+longBreakDurationInput.addEventListener("change", function() {
+    longBreakDuration = parseInt(longBreakDurationInput.value) * 60;
+    if (currentDuration === longBreakDuration) {
+        updateTimerDisplay();
+    }
+});
+
+let currentDuration = workDuration;
+let timerInterval;
+let isPaused = true;
+
+const timerDisplay = document.getElementById("timer");
+const startButton = document.getElementById("startButton");
+const pauseButton = document.getElementById("pauseButton");
+const resetButton = document.getElementById("resetButton");
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+}
+
+function updateTimerDisplay() {
+    timerDisplay.textContent = formatTime(currentDuration);
+}
+
+function startTimer() {
+    timerInterval = setInterval(() => {
+        if (currentDuration > 0) {
+            currentDuration--;
+            updateTimerDisplay();
+        } else {
+            clearInterval(timerInterval);
+            // Play a sound or display a notification
+            // Switch between work session and break
+            if (currentDuration === 0) {
+                currentDuration = shortBreakDuration;
+                startButton.disabled = false;
+            } else if (currentDuration === 0 && shortBreakDuration === currentDuration) {
+                currentDuration = workDuration;
+            }
+            updateTimerDisplay();
         }
-    }
-    if (!board.includes('')) {
-        message.innerText = "It's a tie!";
-        gameOver = true;
-    }
+    }, 1000);
+    isPaused = false;
+    startButton.disabled = true;
+    pauseButton.disabled = false;
+    resetButton.disabled = false;
 }
 
-function cellClicked(index) {
-    if (gameOver || board[index] !== '') return;
-
-    board[index] = currentPlayer;
-    cells[index].innerText = currentPlayer;
-    checkWinner();
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
+function pauseTimer() {
+    clearInterval(timerInterval);
+    isPaused = true;
+    startButton.disabled = false;
+    pauseButton.disabled = true;
 }
 
-function resetBoard() {
-    board = ['', '', '', '', '', '', '', '', ''];
-    cells.forEach(cell => cell.innerText = '');
-    message.innerText = '';
-    currentPlayer = "X";
-    gameOver = false;
+function resetTimer() {
+    clearInterval(timerInterval);
+    currentDuration = workDuration;
+    updateTimerDisplay();
+    isPaused = true;
+    startButton.disabled = false;
+    pauseButton.disabled = true;
 }
+
+startButton.addEventListener("click", startTimer);
+pauseButton.addEventListener("click", pauseTimer);
+resetButton.addEventListener("click", resetTimer);
+
+updateTimerDisplay();
