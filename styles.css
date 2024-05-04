@@ -25,6 +25,26 @@ h1 {
 #timer {
     font-size: 36px;
     margin-bottom: 20px;
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#time-selectors {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#time-selectors label {
+    margin-right: 10px;
+}
+
+#time-selectors input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 #controls {
