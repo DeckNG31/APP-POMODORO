@@ -23,39 +23,41 @@ h1 {
 }
 
 #timer {
-    font-size: 36px;
+    font-size: 48px;
     margin-bottom: 20px;
-    background-color: #eee;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    color: #333; /* Color del reloj */
 }
 
 #time-selectors {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
+#time-selectors div {
+    flex: 1;
+    text-align: center;
+}
+
 #time-selectors label {
-    margin-right: 10px;
+    display: block;
+    margin-bottom: 5px;
 }
 
 #time-selectors input {
-    padding: 5px;
+    width: 60px;
+    padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
 #controls {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-around;
 }
 
 #controls button {
-    margin: 5px;
-    padding: 10px 20px;
+    padding: 12px 25px;
     background: linear-gradient(to bottom, #008CBA 0%, #005f7f 100%);
     color: #fff;
     border: none;
