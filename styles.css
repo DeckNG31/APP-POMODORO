@@ -15,6 +15,7 @@ body {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    max-width: 400px; /* Limitar el ancho para que se vea mejor en pantallas grandes */
 }
 
 h1 {
@@ -26,15 +27,22 @@ h1 {
     margin-bottom: 20px;
 }
 
+#controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #controls button {
     margin: 5px;
     padding: 10px 20px;
-    background-color: #008CBA;
+    background: linear-gradient(to bottom, #008CBA 0%, #005f7f 100%);
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 16px;
 }
 
 #controls button:disabled {
@@ -43,5 +51,5 @@ h1 {
 }
 
 #controls button:hover {
-    background-color: #005f7f;
+    background: linear-gradient(to bottom, #005f7f 0%, #004466 100%);
 }
