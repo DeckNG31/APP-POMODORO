@@ -6,26 +6,43 @@ let workDuration = parseFloat(workDurationInput.value) * 60;
 let shortBreakDuration = parseFloat(shortBreakDurationInput.value) * 60;
 let longBreakDuration = parseFloat(longBreakDurationInput.value) * 60;
 
-workDurationInput.addEventListener("change", function() {
+workDurationInput.addEventListener("input", function() {
     workDuration = parseFloat(workDurationInput.value) * 60;
-    if (currentDuration === workDuration) {
+    if (!isPaused) {
+        // Si el temporizador está en marcha, actualiza el tiempo de enfoque actual
+        currentDuration = workDuration;
         updateTimerDisplay();
     }
 });
 
-shortBreakDurationInput.addEventListener("change", function() {
+shortBreakDurationInput.addEventListener("input", function() {
     shortBreakDuration = parseFloat(shortBreakDurationInput.value) * 60;
-    if (currentDuration === shortBreakDuration) {
-        updateTimerDisplay();
-    }
 });
 
-longBreakDurationInput.addEventListener("change", function() {
+longBreakDurationInput.addEventListener("input", function() {
     longBreakDuration = parseFloat(longBreakDurationInput.value) * 60;
-    if (currentDuration === longBreakDuration) {
-        updateTimerDisplay();
-    }
 });
+
+
+const hoursDisplay = document.getElementById("hours");
+const minutesDisplay = document.getElementById("minutes");
+const secondsDisplay = document.getElementById("seconds");
+
+function updateDigitalClock() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0");
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const seconds = String(now.getSeconds()).padStart(2, "0");
+  hoursDisplay.textContent = hours;
+  minutesDisplay.textContent = minutes;
+  secondsDisplay.textContent = seconds;
+}
+
+// Update the digital clock every second
+setInterval(updateDigitalClock, 1000);
+
+// Call the function initially to set the initial time
+updateDigitalClock();
 
 let currentDuration = workDuration;
 let timerInterval;
@@ -49,6 +66,10 @@ function updateTimerDisplay() {
 let isWorking = true; // Variable para rastrear si estamos en un período de trabajo
 
 function startTimer() {
+    if (!isPaused) {
+        return; // Si ya se está ejecutando el temporizador, salir de la función
+    }
+    
     timerInterval = setInterval(() => {
         if (currentDuration > 0) {
             currentDuration--;
@@ -68,12 +89,10 @@ function startTimer() {
         }
     }, 1000);
     isPaused = false;
-    startButton.disabled = false;
+    startButton.disabled = true; // Deshabilitar el botón de "Start"
     pauseButton.disabled = false;
     resetButton.disabled = false;
 }
-
-
 
 
 function pauseTimer() {
