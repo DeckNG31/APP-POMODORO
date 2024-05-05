@@ -1,5 +1,5 @@
 // Crear un nuevo registro en la base de datos
-async function crearSesion(duracion, fecha) {
+async function crearSesion(pool , duracion, fecha) {
     try {
       const query = 'INSERT INTO sesiones (duracion, fecha) VALUES ($1, $2) RETURNING *';
       const result = await pool.query(query, [duracion, fecha]);
@@ -11,11 +11,12 @@ async function crearSesion(duracion, fecha) {
   }
   
   // Obtener todos los registros de sesiones de la base de datos
-  async function obtenerSesiones() {
+  async function obtenerSesiones(pool) {
     try {
       const query = 'SELECT * FROM sesiones ORDER BY fecha DESC';
       const result = await pool.query(query);
-      return result.rows; // Devuelve todos los registros de sesiones
+      //return result.rows; // Devuelve todos los registros de sesiones
+      console.log(result.rows);
     } catch (error) {
       console.error('Error al obtener las sesiones:', error);
       throw error;
@@ -23,7 +24,7 @@ async function crearSesion(duracion, fecha) {
   }
   
   // Actualizar un registro de sesión en la base de datos
-  async function actualizarSesion(id, duracion, fecha) {
+  async function actualizarSesion(pool ,id, duracion, fecha) {
     try {
       const query = 'UPDATE sesiones SET duracion = $1, fecha = $2 WHERE id = $3 RETURNING *';
       const result = await pool.query(query, [duracion, fecha, id]);
@@ -35,7 +36,7 @@ async function crearSesion(duracion, fecha) {
   }
   
   // Eliminar un registro de sesión de la base de datos
-  async function eliminarSesion(id) {
+  async function eliminarSesion(pool , id) {
     try {
       const query = 'DELETE FROM sesiones WHERE id = $1';
       await pool.query(query, [id]);
@@ -46,3 +47,10 @@ async function crearSesion(duracion, fecha) {
     }
   }
   
+
+  module.exports={
+eliminarSesion,
+actualizarSesion,
+obtenerSesiones,
+crearSesion
+  };

@@ -75,3 +75,5 @@ app.get('/sesiones', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor Node.js escuchando en el puerto ${PORT}`);
 });
+
+//obtenerSesiones(pool);
