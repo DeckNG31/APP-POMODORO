@@ -89,24 +89,36 @@ function startTimer() {
                 const notificationSound = document.getElementById("notificationSound");
                 notificationSound.play();
                 completedRounds++;
-                // Actualizar el tiempo restante al tiempo de descanso corto
-                currentDuration = shortBreakDuration;
+                // Actualizar el tiempo restante al descanso correspondiente
+
+////////////////////////////////////////////////////////////////////////////////
+
+                if (completedRounds % 4 === 0) {
+                    // Si el número de rondas completadas es múltiplo de 4, activa el descanso largo
+                 //   print(completedRounds);
+                    currentDuration = longBreakDuration;
+                    //updateTimerDisplay();
+                } else {
+                    // De lo contrario, activa el descanso corto
+                    currentDuration = shortBreakDuration;
+                }
+
+/////////////////////////////////////////////////////////////////////////
+
+
+                //currentDuration = shortBreakDuration;
                 isWorking = false; // Cambiar a descanso
                 startButton.disabled = false;
                 isPaused = true;
             } else {
                 //isPaused = true;
                 startButton.disabled = false;
+               // print(completedRounds);
                // isPaused = true;
                 const breakNotificationSound = document.getElementById("breakNotificationSound");
                 breakNotificationSound.play();
-                if (completedRounds % 4 === 0) {
-                    // Si el número de rondas completadas es múltiplo de 4, activa el descanso largo
-                    currentDuration = longBreakDuration;
-                } else {
-                    // De lo contrario, activa el descanso corto
-                    currentDuration = shortBreakDuration;
-                }
+                
+               
                 isWorking = true; // Cambiar a trabajo
                 currentDuration = workDuration;
                 
