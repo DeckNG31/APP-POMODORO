@@ -1,7 +1,7 @@
 let workDurationInput = document.getElementById("focusDuration");
 let shortBreakDurationInput = document.getElementById("shortBreakDuration");
 let longBreakDurationInput = document.getElementById("longBreakDuration");
-
+let completedRounds = 0;
 let workDuration = parseFloat(workDurationInput.value) * 60;
 let shortBreakDuration = parseFloat(shortBreakDurationInput.value) * 60;
 let longBreakDuration = parseFloat(longBreakDurationInput.value) * 60;
@@ -48,6 +48,8 @@ let currentDuration = workDuration;
 let timerInterval;
 let isPaused = true;
 
+
+
 const timerDisplay = document.getElementById("timer");
 const startButton = document.getElementById("startButton");
 const pauseButton = document.getElementById("pauseButton");
@@ -69,30 +71,64 @@ function startTimer() {
     if (!isPaused) {
         return; // Si ya se está ejecutando el temporizador, salir de la función
     }
-    
+
+    // Si el temporizador está pausado, pero el botón de Start se presiona,
+    // necesitamos asegurarnos de que el temporizador se inicie correctamente
+    isPaused = false;
+
     timerInterval = setInterval(() => {
         if (currentDuration > 0) {
             currentDuration--;
             updateTimerDisplay();
         } else {
             clearInterval(timerInterval);
-            // Play a sound or display a notification
-            // Switch between work session and break
+            
+
+            // Play a sound
             if (isWorking) {
+                const notificationSound = document.getElementById("notificationSound");
+                notificationSound.play();
+                completedRounds++;
+                // Actualizar el tiempo restante al tiempo de descanso corto
                 currentDuration = shortBreakDuration;
                 isWorking = false; // Cambiar a descanso
+                startButton.disabled = false;
+                isPaused = true;
             } else {
-                currentDuration = workDuration;
+                //isPaused = true;
+                startButton.disabled = false;
+               // isPaused = true;
+                const breakNotificationSound = document.getElementById("breakNotificationSound");
+                breakNotificationSound.play();
+                if (completedRounds % 4 === 0) {
+                    // Si el número de rondas completadas es múltiplo de 4, activa el descanso largo
+                    currentDuration = longBreakDuration;
+                } else {
+                    // De lo contrario, activa el descanso corto
+                    currentDuration = shortBreakDuration;
+                }
                 isWorking = true; // Cambiar a trabajo
+                currentDuration = workDuration;
+                
             }
+          //  isWorking = !isWorking;
+            isPaused = true;
             updateTimerDisplay();
         }
+        
     }, 1000);
-    isPaused = false;
-    startButton.disabled = true; // Deshabilitar el botón de "Start"
+
+    // Deshabilitar el botón de "Start" mientras el temporizador está en marcha
+    startButton.disabled = true;
+
+    // Habilitar el botón de "Pause" y "Reset"
     pauseButton.disabled = false;
     resetButton.disabled = false;
 }
+
+
+
+
 
 
 function pauseTimer() {
