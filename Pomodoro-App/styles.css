@@ -115,3 +115,9 @@ h1 {
 #sessionHistory li {
     list-style: none;
 }
+
+#showHistoryButton, #hideHistoryButton {
+    display: block;
+    margin: 0 auto; /* Esto centrará horizontalmente los botones */
+    margin-bottom: 10px; /* Espacio adicional entre los botones y el historial */
+}

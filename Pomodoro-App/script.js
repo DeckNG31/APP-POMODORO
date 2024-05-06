@@ -26,6 +26,7 @@ function calcularDuracionPromedio(sesiones) {
 
 const showHistoryButton = document.getElementById("showHistoryButton");
 const sessionHistoryDiv = document.getElementById("sessionList");
+const hideHistoryButton = document.getElementById("hideHistoryButton");
 
 // Función para mostrar el historial de sesiones y la duración promedio
 function mostrarEstadisticas(sesiones) {
@@ -53,13 +54,27 @@ showHistoryButton.addEventListener("click", async () => {
         mostrarEstadisticas(sesiones);
         showHistoryButton.style.display = "none";
         sessionHistoryDiv.style.display = "block";
+        hideHistoryButton.style.display = "block";
     } catch (error) {
         console.error("Error al obtener las sesiones:", error);
     }
 });
 
+// Función para manejar el clic en el botón de ocultar historial
+hideHistoryButton.addEventListener("click", () => {
+    showHistoryButton.style.display = "block";
+    hideHistoryButton.style.display = "none";
+    sessionHistoryDiv.style.display = "none";
+});
 
-
+// Verificar el estado inicial de los botones y el historial
+if (sessionHistoryDiv.style.display === "none") {
+    showHistoryButton.style.display = "block";
+    hideHistoryButton.style.display = "none";
+} else {
+    showHistoryButton.style.display = "none";
+    hideHistoryButton.style.display = "block";
+}
 
 // Obtener las sesiones del servidor y luego mostrar las estadísticas
 async function obtenerYMostrarEstadisticas() {
