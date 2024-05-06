@@ -49,7 +49,6 @@ h1 {
     margin-left: 90px; /* Add margin-left auto to move the clock more to the right */
 }
 
-
 #time-selectors {
     display: flex;
     justify-content: space-between;
@@ -76,6 +75,7 @@ h1 {
 #controls {
     display: flex;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 #controls button {
@@ -96,4 +96,22 @@ h1 {
 
 #controls button:hover {
     background: linear-gradient(to bottom, #005f7f 0%, #004466 100%);
+}
+
+#statistics, #sessionList {
+    margin-top: 20px;
+}
+
+#statistics h2, #sessionList h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#statistics p, #sessionList ul {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#sessionHistory li {
+    list-style: none;
 }

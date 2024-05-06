@@ -47,6 +47,7 @@ async function crearSesion(pool , duracion, fecha) {
     }
   }
   
+  
 
   module.exports={
 eliminarSesion,

@@ -35,17 +35,27 @@
             <button id="pauseButton" disabled>Pause</button>
             <button id="resetButton" disabled>Reset</button>
         </div>
+        <div id="statistics">
+            <h2>Statistics</h2>
+            <p>Total Sessions: <span id="totalSessions">0</span></p>
+            <p>Average Session Duration: <span id="averageDuration">00:00</span></p>
+        </div>
+        <button id="showHistoryButton">Show Session History</button>
+        <div id="sessionList" style="display: none;">
+            <h2>Session History</h2>
+            <ul id="sessionHistory"></ul>
+        </div>
+        
     </div>
     <script src="script.js"></script>
+    
     <audio id="notificationSound">
         <source src="noti.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
-      </audio>
-      <audio id="breakNotificationSound">
+    </audio>
+    <audio id="breakNotificationSound">
         <source src="break.mp3" type="audio/mpeg">
-        Tu navegador no admite el elemento de audio.
-      </audio>
-      
+        Your browser does not support the audio element.
+    </audio>
 </body>
 </html>
-
